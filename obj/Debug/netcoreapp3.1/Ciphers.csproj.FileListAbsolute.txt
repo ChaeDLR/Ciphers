@@ -1,0 +1,13 @@
+C:\Users\delar\source\repos\Ciphers\Ciphers\bin\Debug\netcoreapp3.1\Ciphers.exe
+C:\Users\delar\source\repos\Ciphers\Ciphers\bin\Debug\netcoreapp3.1\Ciphers.deps.json
+C:\Users\delar\source\repos\Ciphers\Ciphers\bin\Debug\netcoreapp3.1\Ciphers.runtimeconfig.json
+C:\Users\delar\source\repos\Ciphers\Ciphers\bin\Debug\netcoreapp3.1\Ciphers.runtimeconfig.dev.json
+C:\Users\delar\source\repos\Ciphers\Ciphers\bin\Debug\netcoreapp3.1\Ciphers.dll
+C:\Users\delar\source\repos\Ciphers\Ciphers\bin\Debug\netcoreapp3.1\Ciphers.pdb
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.csprojAssemblyReference.cache
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.AssemblyInfoInputs.cache
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.AssemblyInfo.cs
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.csproj.CoreCompileInputs.cache
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.dll
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.pdb
+C:\Users\delar\source\repos\Ciphers\Ciphers\obj\Debug\netcoreapp3.1\Ciphers.genruntimeconfig.cache
