@@ -1,0 +1,8 @@
+
+*.json
+*.xml
+*.dll
+*.dll
+*.pdb
+*.cache
+*.props
