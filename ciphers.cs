@@ -1,7 +1,8 @@
 ﻿// Chae DeLaRosa
-// 
+// Cipher console program to encrypt and decrypt messages
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ciphers
 {
@@ -10,112 +11,110 @@ namespace Ciphers
         static string Menu()
         {
             Console.WriteLine("Select Cipher.");
-            Console.WriteLine("1. Cesars cipher.");
-            Console.WriteLine("Enter 'exit' to quit the program.");
+            Console.WriteLine("1. Cesars cipher.\n");
+            Console.WriteLine("Enter 'exit' to quit the program.\n");
             string usersSelection = Console.ReadLine();
             return usersSelection;
         }
 
-        // Inputs: A string to encrypted or decrypted,
-        // The int key used in the encryption method,
-        // And the int of the encryption or decryption selection
-
-        // Outputs: Encrypted or decrypted string
-        static string CaesarsCipher(string message, int key, int encryptionflag)
+        static void CCMenu()
         {
-            // string of characters used for the encryption and decryption
-            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !?.,";
-            // Found this as a way to append to a string repeatedly 
-            System.Text.StringBuilder encryptedMessage = new System.Text.StringBuilder("");
+            CaesarsCipher caesarsCipher = new CaesarsCipher { };
 
-            // perform encryption or decryption based on the encryptionflag input
-            switch (encryptionflag)
+            string message;
+            string key;
+
+            Console.WriteLine("1) Encrypt.");
+            Console.WriteLine("2) Decrypt.");
+            string userSelection = Console.ReadLine();
+
+            switch (userSelection)
             {
-                // encryption case
-                case 1:
-                    // loop through the message so we can work with each character individually
-                    foreach (char letter in message)
+                case "1":
+                    Console.WriteLine("Enter message.\n");
+                    message = Console.ReadLine();
+
+                    while (true)
                     {
-                        // If the character in the message is in our character list
-                        if (characters.Contains(letter))
+                        Console.WriteLine("Enter a key.");
+                        key = Console.ReadLine();
+                        if (key.All(char.IsDigit))
                         {
-                            // for encryption we want to take the index of the char and add the key
-                            int characterIndex = characters.IndexOf(letter) + key;
-                            // If the key is massive we need to be able to get it into a workable index
-                            while (characterIndex >= characters.Length)
-                            {
-                                characterIndex -= characters.Length;
-                            }
-                            // append our encypted char to our ciphertext
-                            encryptedMessage.Append(characters[characterIndex]);
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter an integer.");
                         }
                     }
-                    break;
-                // decryption case
-                // same thing as encryption just backwards
-                case 2:
-                    foreach (char letter in message)
+                    try
                     {
-                        if (characters.Contains(letter))
-                        {
-                            int characterIndex = characters.IndexOf(letter) - key;
-                            while (characterIndex <= 0)
-                            {
-                                characterIndex += characters.Length;
-                            }
-                            
-                            encryptedMessage.Append(characters[characterIndex]);
-                        }
+                        string encryptedMessage = caesarsCipher.Encrypt(message, Convert.ToInt32(key));
+                        Console.WriteLine(encryptedMessage);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                     break;
-                default:
-                    Console.WriteLine("Error");
+
+                case "2":
+                    Console.WriteLine("Enter message.\n");
+                    message = Console.ReadLine();
+
+                    while (true)
+                    {
+                        Console.WriteLine("Enter a key.");
+                        key = Console.ReadLine();
+                        if (key.All(char.IsDigit))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter an integer.");
+                        }
+                    }
+                    try
+                    {
+                        string encryptedMessage = caesarsCipher.Decrypt(message, Convert.ToInt32(key));
+                        Console.WriteLine(encryptedMessage);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                     break;
             }
-            return Convert.ToString(encryptedMessage);
         }
 
 
         static void Main(string[] args)
         {
-            // Keep our program running until the user stops it
-            bool running = true;
-            while (running)
+            List<string> killCodes = new List<string> { };
+
+            while (true)
             {
-                // grab our users selection
                 string menuSelection = Menu().ToLower();
-                // Decide what to do with it
-                switch (menuSelection)
+                
+                if (killCodes.Contains(menuSelection.ToLower()))
                 {
-                    // caesars cipher
-                    case "1":
-                        Console.WriteLine("Make a selection.");
-                        Console.WriteLine("1. Encrypt");
-                        Console.WriteLine("2. Decrypt");
-                        int encryptionSelection = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter your message.");
-                        string message = Console.ReadLine();
-                        Console.WriteLine("Enter a key.");
-                        int key = Convert.ToInt32(Console.ReadLine());
-                        // Execute cipher
-                        string alteredMessage = CaesarsCipher(message, key, encryptionSelection);
-                        // Decide what to print to the user depending on their selection
-                        if (encryptionSelection == 1)
-                        {
-                            Console.WriteLine($"Encrypted message: \"{alteredMessage}\"");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Decrypted message: \"{alteredMessage}\"");
-                        }
-                        break;
-                    case "exit":
-                        Console.WriteLine("Quiting program...");
-                        running = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid input.");
-                        break;
+                    break;
+                }
+                else
+                {
+                    switch (menuSelection)
+                    {
+                        case "1":
+                            CCMenu();
+                            break;
+                        case "2":
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
