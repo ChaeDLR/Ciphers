@@ -8,13 +8,102 @@ namespace Ciphers
 {
     class Program
     {
-        static string Menu()
+
+        static void Main(string[] args)
         {
-            Console.WriteLine("Select Cipher.");
-            Console.WriteLine("1. Cesars cipher.\n");
-            Console.WriteLine("Enter 'exit' to quit the program.\n");
-            string usersSelection = Console.ReadLine();
-            return usersSelection;
+            try
+            {
+                switch (args[0].ToLower())
+                {
+                    case "caesarcipher":
+                        try
+                        {
+                            if (args[1].ToLower() == "bruteforce")
+                            {
+                                CaesarCipherArgs(args[2], args[1]);
+                            }
+                            CaesarCipherArgs(args[3], args[1], Convert.ToInt32(args[2]));
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
+                            Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
+                            Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
+                        }
+                        return;
+                    default:
+                        Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
+                        Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
+                        Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
+                        return;
+                }
+            }
+            catch
+            {
+                MainMenu();
+            }
+        }
+
+        static void CaesarCipherArgs(string message, string option, int key = 1)
+        {
+            try
+            {
+                CaesarsCipher caesarsCipher = new CaesarsCipher { };
+
+                switch (option.ToLower())
+                {
+                    case "encrypt":
+                        Console.WriteLine($"\"{caesarsCipher.Encrypt(message, key)}\"");
+                        return;
+                    case "decrypt":
+                        Console.WriteLine($"\"{caesarsCipher.Decrypt(message, key)}\"");
+                        return;
+                    case "bruteforce":
+                        List<string> decryptedMessages = caesarsCipher.BruteForce(message);
+
+                        foreach (string decryptedText in decryptedMessages)
+                        {
+                            Console.WriteLine($"\"{decryptedText}\"");
+                        }
+                        return;
+                    default:
+                        return;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
+                Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
+                Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
+                return;
+            }
+        }
+
+        static void MainMenu()
+        {
+            List<string> killCodes = new List<string> { "exit", "quit", "kill"};
+
+            while (true)
+            {
+                Console.WriteLine("Select Cipher.");
+                Console.WriteLine("1. Cesars cipher.\n");
+                Console.WriteLine("Enter 'exit' to quit the program.\n");
+                string usersSelection = Console.ReadLine();
+
+                if (killCodes.Contains(usersSelection.ToLower()))
+                {
+                    return;
+                }
+                else
+                {
+                    switch (usersSelection)
+                    {
+                        case "1":
+                            CCMenu();
+                            break;
+                    }
+                }
+            }
         }
 
         static void CCMenu()
@@ -26,6 +115,7 @@ namespace Ciphers
 
             Console.WriteLine("1) Encrypt.");
             Console.WriteLine("2) Decrypt.");
+            Console.WriteLine("3) Brute Force.");
             string userSelection = Console.ReadLine();
 
             switch (userSelection)
@@ -87,35 +177,19 @@ namespace Ciphers
                         Console.WriteLine(ex.Message);
                     }
                     break;
-            }
-        }
+                case "3":
+                    Console.WriteLine("Enter message.\n");
+                    message = Console.ReadLine();
+                    List<string> decryptedMessages = caesarsCipher.BruteForce(message);
 
-
-        static void Main(string[] args)
-        {
-            List<string> killCodes = new List<string> { };
-
-            while (true)
-            {
-                string menuSelection = Menu().ToLower();
-                
-                if (killCodes.Contains(menuSelection.ToLower()))
-                {
-                    break;
-                }
-                else
-                {
-                    switch (menuSelection)
+                    foreach(string decryptedText in decryptedMessages)
                     {
-                        case "1":
-                            CCMenu();
-                            break;
-                        case "2":
-                            break;
-                        default:
-                            break;
+                        Console.WriteLine($"\"{decryptedText}\"");
                     }
-                }
+                    break;
+                default:
+                    Console.WriteLine("Invalid input.");
+                    break;
             }
         }
     }
