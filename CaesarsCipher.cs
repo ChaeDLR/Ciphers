@@ -8,7 +8,7 @@ namespace Ciphers
 {
     class CaesarsCipher
     {
-        const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?.,";
+        private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !?.,";
 
         // Inputs: A string to be encrypted
         // The int key used in the encryption method to shift the character

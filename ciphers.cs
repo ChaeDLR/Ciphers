@@ -31,16 +31,52 @@ namespace Ciphers
                             Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
                         }
                         return;
+                    case "transpositioncipher":
+                        try
+                        {
+                            TranspositionArgs(args[3], args[1], Convert.ToInt32(args[2]));
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Valid input: transpositioncipher [key] [message]");
+                        }
+                        return;
                     default:
                         Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
                         Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
                         Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
+                        Console.WriteLine("");
+                        Console.WriteLine("Valid input: transpositioncipher [encrypt] [key] [message]");
                         return;
                 }
             }
             catch
             {
                 MainMenu();
+            }
+        }
+
+        static void TranspositionArgs(string message, string option, int key)
+        {
+            try
+            {
+                TranspositionCipher transpositionCipher = new TranspositionCipher();
+
+                switch (option.ToLower())
+                {
+                    case "encrypt":
+                        Console.WriteLine($"|{transpositionCipher.Encrypt(message, key)}|");
+                        return;
+                    case "decrypt":
+                        return;
+                    default:
+                        return;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Valid input: transpositioncipher [encrypt] [key] [message]");
+                return;
             }
         }
 
@@ -53,17 +89,17 @@ namespace Ciphers
                 switch (option.ToLower())
                 {
                     case "encrypt":
-                        Console.WriteLine($"\"{caesarsCipher.Encrypt(message, key)}\"");
+                        Console.WriteLine($"|{caesarsCipher.Encrypt(message, key)}|");
                         return;
                     case "decrypt":
-                        Console.WriteLine($"\"{caesarsCipher.Decrypt(message, key)}\"");
+                        Console.WriteLine($"|{caesarsCipher.Decrypt(message, key)}|");
                         return;
                     case "bruteforce":
                         List<string> decryptedMessages = caesarsCipher.BruteForce(message);
 
                         foreach (string decryptedText in decryptedMessages)
                         {
-                            Console.WriteLine($"\"{decryptedText}\"");
+                            Console.WriteLine($"|{decryptedText}|");
                         }
                         return;
                     default:
@@ -86,7 +122,8 @@ namespace Ciphers
             while (true)
             {
                 Console.WriteLine("Select Cipher.");
-                Console.WriteLine("1. Cesars cipher.\n");
+                Console.WriteLine("1. Cesars cipher.");
+                Console.WriteLine("2. Transposition cipher.\n");
                 Console.WriteLine("Enter 'exit' to quit the program.\n");
                 string usersSelection = Console.ReadLine();
 
@@ -101,8 +138,55 @@ namespace Ciphers
                         case "1":
                             CCMenu();
                             break;
+                        case "2":
+                            TranspositionMenu();
+                            break;
                     }
                 }
+            }
+        }
+
+        static void TranspositionMenu()
+        {
+            TranspositionCipher transpositionCipher = new TranspositionCipher();
+
+            string message;
+            string key;
+
+            Console.WriteLine("1) Encrypt.");
+
+            string userSelection = Console.ReadLine();
+
+            switch (userSelection)
+            {
+                case "1":
+                    Console.WriteLine("Enter message.\n");
+                    message = Console.ReadLine();
+
+                    while (true)
+                    {
+                        Console.WriteLine("Enter a key.");
+                        key = Console.ReadLine();
+                        if (key.All(char.IsDigit))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Enter an integer.");
+                        }
+                    }
+                    try
+                    {
+                        string encryptedMessage = transpositionCipher.Encrypt(message, Convert.ToInt32(key));
+                        Console.WriteLine($"|{encryptedMessage}|");
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
             }
         }
 
@@ -140,7 +224,7 @@ namespace Ciphers
                     try
                     {
                         string encryptedMessage = caesarsCipher.Encrypt(message, Convert.ToInt32(key));
-                        Console.WriteLine(encryptedMessage);
+                        Console.WriteLine($"|{encryptedMessage}|");
                         break;
                     }
                     catch (Exception ex)
@@ -169,7 +253,7 @@ namespace Ciphers
                     try
                     {
                         string encryptedMessage = caesarsCipher.Decrypt(message, Convert.ToInt32(key));
-                        Console.WriteLine(encryptedMessage);
+                        Console.WriteLine($"|{encryptedMessage}|");
                         break;
                     }
                     catch (Exception ex)
@@ -184,7 +268,7 @@ namespace Ciphers
 
                     foreach(string decryptedText in decryptedMessages)
                     {
-                        Console.WriteLine($"\"{decryptedText}\"");
+                        Console.WriteLine($"|{decryptedText}|");
                     }
                     break;
                 default:
