@@ -8,7 +8,10 @@ namespace Ciphers
 {
     class Program
     {
-
+        /// <summary>
+        /// Allow user to interact with the program using cmd line args
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             try
@@ -56,16 +59,20 @@ namespace Ciphers
             }
         }
 
+        /// <summary>
+        /// if the user uses the transposition arg
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="option"></param>
+        /// <param name="key"></param>
         static void TranspositionArgs(string message, string option, int key)
         {
             try
             {
-                TranspositionCipher transpositionCipher = new TranspositionCipher();
-
                 switch (option.ToLower())
                 {
                     case "encrypt":
-                        Console.WriteLine($"|{transpositionCipher.Encrypt(message, key)}|");
+                        Console.WriteLine($"|{Ciphers.TranspositionCipher.Encrypt(message, key)}|");
                         return;
                     case "decrypt":
                         return;
@@ -80,22 +87,26 @@ namespace Ciphers
             }
         }
 
+        /// <summary>
+        /// if the user uses the caesar cipher arg
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="option"></param>
+        /// <param name="key"></param>
         static void CaesarCipherArgs(string message, string option, int key = 1)
         {
             try
             {
-                CaesarsCipher caesarsCipher = new CaesarsCipher { };
-
                 switch (option.ToLower())
                 {
                     case "encrypt":
-                        Console.WriteLine($"|{caesarsCipher.Encrypt(message, key)}|");
+                        Console.WriteLine($"|{Ciphers.CaesarsCipher.Encrypt(message, key)}|");
                         return;
                     case "decrypt":
-                        Console.WriteLine($"|{caesarsCipher.Decrypt(message, key)}|");
+                        Console.WriteLine($"|{Ciphers.CaesarsCipher.Decrypt(message, key)}|");
                         return;
                     case "bruteforce":
-                        List<string> decryptedMessages = caesarsCipher.BruteForce(message);
+                        List<string> decryptedMessages = Ciphers.CaesarsCipher.BruteForce(message);
 
                         foreach (string decryptedText in decryptedMessages)
                         {
@@ -115,6 +126,9 @@ namespace Ciphers
             }
         }
 
+        /// <summary>
+        /// Console interface main menu
+        /// </summary>
         static void MainMenu()
         {
             List<string> killCodes = new List<string> { "exit", "quit", "kill"};
@@ -146,10 +160,11 @@ namespace Ciphers
             }
         }
 
+        /// <summary>
+        /// Menu for the transposition option
+        /// </summary>
         static void TranspositionMenu()
         {
-            TranspositionCipher transpositionCipher = new TranspositionCipher();
-
             string message;
             string key;
 
@@ -178,7 +193,7 @@ namespace Ciphers
                     }
                     try
                     {
-                        string encryptedMessage = transpositionCipher.Encrypt(message, Convert.ToInt32(key));
+                        string encryptedMessage = Ciphers.TranspositionCipher.Encrypt(message, Convert.ToInt32(key));
                         Console.WriteLine($"|{encryptedMessage}|");
                         break;
                     }
@@ -190,10 +205,11 @@ namespace Ciphers
             }
         }
 
+        /// <summary>
+        /// Menu for the caesar cipher option
+        /// </summary>
         static void CCMenu()
         {
-            CaesarsCipher caesarsCipher = new CaesarsCipher { };
-
             string message;
             string key;
 
@@ -223,7 +239,7 @@ namespace Ciphers
                     }
                     try
                     {
-                        string encryptedMessage = caesarsCipher.Encrypt(message, Convert.ToInt32(key));
+                        string encryptedMessage = Ciphers.CaesarsCipher.Encrypt(message, Convert.ToInt32(key));
                         Console.WriteLine($"|{encryptedMessage}|");
                         break;
                     }
@@ -252,7 +268,7 @@ namespace Ciphers
                     }
                     try
                     {
-                        string encryptedMessage = caesarsCipher.Decrypt(message, Convert.ToInt32(key));
+                        string encryptedMessage = Ciphers.CaesarsCipher.Decrypt(message, Convert.ToInt32(key));
                         Console.WriteLine($"|{encryptedMessage}|");
                         break;
                     }
@@ -264,7 +280,7 @@ namespace Ciphers
                 case "3":
                     Console.WriteLine("Enter message.\n");
                     message = Console.ReadLine();
-                    List<string> decryptedMessages = caesarsCipher.BruteForce(message);
+                    List<string> decryptedMessages = Ciphers.CaesarsCipher.BruteForce(message);
 
                     foreach(string decryptedText in decryptedMessages)
                     {
