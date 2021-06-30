@@ -169,8 +169,9 @@ namespace Ciphers
             string key;
 
             Console.WriteLine("1) Encrypt.");
+            Console.WriteLine("2) Decrypt.");
 
-            string userSelection = Console.ReadLine();
+            string userSelection = Console.ReadLine().Trim();
 
             switch (userSelection)
             {
@@ -188,6 +189,7 @@ namespace Ciphers
                         }
                         else
                         {
+                            Console.WriteLine("Invalid key.");
                             Console.WriteLine("Enter an integer.");
                         }
                     }
@@ -196,6 +198,35 @@ namespace Ciphers
                         string encryptedMessage = Ciphers.TranspositionCipher.Encrypt(message, Convert.ToInt32(key));
                         Console.WriteLine($"|{encryptedMessage}|");
                         break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+
+                case "2":
+                    Console.WriteLine("Enter the cipher text.");
+                    message = Console.ReadLine();
+
+                    while (true)
+                    {
+                        Console.WriteLine("Enter the key.");
+                        key = Console.ReadLine();
+                        if (key.All(char.IsDigit))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid key.");
+                            Console.WriteLine("Enter an integer.");
+                        }
+                    }
+                    try
+                    {
+                        string decryptedMessage = Ciphers.TranspositionCipher.Decrypt(message, Convert.ToInt32(key));
+                        Console.WriteLine($"| {decryptedMessage} |");
                     }
                     catch (Exception ex)
                     {
@@ -216,7 +247,7 @@ namespace Ciphers
             Console.WriteLine("1) Encrypt.");
             Console.WriteLine("2) Decrypt.");
             Console.WriteLine("3) Brute Force.");
-            string userSelection = Console.ReadLine();
+            string userSelection = Console.ReadLine().Trim();
 
             switch (userSelection)
             {

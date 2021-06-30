@@ -41,10 +41,38 @@ namespace Ciphers
             return Convert.ToString(encryptedMessage);
         }
 
+        /// <summary>
+        /// Reverse transpose a string
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static string Decrypt(string message, int key)
         {
             StringBuilder decryptedMessage = new StringBuilder("");
+            for (int i = 0; i < message.Length; i++)
+            {
+                decryptedMessage.Append(" ");
+            }
 
+            int encryptionBoxRows = message.Length / key;
+            int index = 0;
+
+            for (int row = 0; row < encryptionBoxRows; row++)
+            {
+                int matrixIndex = row;
+
+                for (int i = 0; i <= key; i++)
+                {
+                    if (matrixIndex < message.Length)
+                    {
+                        decryptedMessage.Replace(
+                            char.Parse(" "), message[matrixIndex], index++, 1
+                            );
+                    }
+                    matrixIndex += encryptionBoxRows;
+                }
+            }
             return Convert.ToString(decryptedMessage);
             
         }

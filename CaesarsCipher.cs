@@ -18,6 +18,7 @@ namespace Ciphers
         /// <returns> encrypted string </returns>
         public static string Encrypt(string message, int key)
         {
+            message = message.Trim();
             StringBuilder encryptedMessage = new StringBuilder("");
 
             foreach (char letter in message)
@@ -59,7 +60,7 @@ namespace Ciphers
                     int characterIndex = characters.IndexOf(letter) - key;
                     while (characterIndex <= 0)
                     {
-                        characterIndex += characters.Length-1;
+                        characterIndex += characters.Length;
                     }
                     try
                     {
