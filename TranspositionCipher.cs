@@ -17,7 +17,6 @@ namespace Ciphers
         {
             string fixedMessage = message.Trim();
             fixedMessage = fixedMessage.Replace(" ", string.Empty);
-            Console.WriteLine($"Fixed string : {fixedMessage}");
 
             StringBuilder encryptedMessage = new StringBuilder("");
             int encryptionBoxRows = fixedMessage.Length / key;
@@ -30,7 +29,6 @@ namespace Ciphers
                     try
                     {
                         encryptedMessage.Append(fixedMessage[currentIndex]);
-                        Console.WriteLine($"Current Index = {currentIndex}");
                     }
                     catch
                     {
@@ -40,7 +38,6 @@ namespace Ciphers
                     currentIndex += key;
                 }
             }
-            Console.WriteLine(fixedMessage.Length);
             return Convert.ToString(encryptedMessage);
         }
 
