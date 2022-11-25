@@ -8,7 +8,7 @@ namespace Ciphers
 {
     public static class CaesarsCipher
     {
-        private const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz !?.,";
+        private const string characters = "abcdefghijklmnopqrstuvwxyz";
 
         /// <summary>
         /// The int key used in the encryption method to shift the character
@@ -58,7 +58,7 @@ namespace Ciphers
                 if (characters.Contains(letter))
                 {
                     int characterIndex = characters.IndexOf(letter) - key;
-                    while (characterIndex <= 0)
+                    while (characterIndex < 0)
                     {
                         characterIndex += characters.Length;
                     }
