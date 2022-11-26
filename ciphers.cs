@@ -6,278 +6,6 @@ using System.Linq;
 
 namespace Ciphers
 {
-    class Menu
-    {
-
-        internal List<string> killCodes = new List<string> { "exit", "quit", "kill", "q" };
-
-        /// <summary>
-        /// if the user uses the transposition arg
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="option"></param>
-        /// <param name="key"></param>
-        internal void TranspositionArgs(string message, string option, int key)
-        {
-            try
-            {
-                switch (option.ToLower())
-                {
-                    case "encrypt":
-                        Console.WriteLine($"|{Ciphers.TranspositionCipher.Encrypt(message, key)}|");
-                        return;
-                    case "decrypt":
-                        return;
-                    default:
-                        return;
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Valid input: transpositioncipher [encrypt] [key] [message]");
-                return;
-            }
-        }
-
-        /// <summary>
-        /// if the user uses the caesar cipher arg
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="option"></param>
-        /// <param name="key"></param>
-        internal void CaesarCipherArgs(string message, string option, int key = 1)
-        {
-            try
-            {
-                switch (option.ToLower())
-                {
-                    case "encrypt":
-                        Console.WriteLine($"|{Ciphers.CaesarsCipher.Encrypt(message, key)}|");
-                        return;
-                    case "decrypt":
-                        Console.WriteLine($"|{Ciphers.CaesarsCipher.Decrypt(message, key)}|");
-                        return;
-                    case "bruteforce":
-                        List<string> decryptedMessages = Ciphers.CaesarsCipher.BruteForce(message);
-
-                        foreach (string decryptedText in decryptedMessages)
-                        {
-                            Console.WriteLine($"|{decryptedText}|");
-                        }
-                        return;
-                    default:
-                        return;
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
-                Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
-                Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
-                return;
-            }
-        }
-
-        /// <summary>
-        /// Console interface main menu
-        /// </summary>
-        internal void MainMenu()
-        {
-
-            while (true)
-            {
-                Console.WriteLine("Select Cipher.");
-                Console.WriteLine("1. Cesars cipher.");
-                Console.WriteLine("2. Transposition cipher.\n");
-                Console.WriteLine("Enter 'exit' to quit the program.\n");
-                string usersSelection = Console.ReadLine();
-
-                if (killCodes.Contains(usersSelection.ToLower()))
-                {
-                    return;
-                }
-                else
-                {
-                    switch (usersSelection)
-                    {
-                        case "1":
-                            CCMenu();
-                            break;
-                        case "2":
-                            TranspositionMenu();
-                            break;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Menu for the transposition option
-        /// </summary>
-        internal void TranspositionMenu()
-        {
-            string message;
-            string key;
-
-            Console.WriteLine("1) Encrypt.");
-            Console.WriteLine("2) Decrypt.");
-
-            string userSelection = Console.ReadLine().Trim();
-
-            switch (userSelection)
-            {
-                case "1":
-                    Console.WriteLine("Enter message.\n");
-                    message = Console.ReadLine();
-
-                    while (true)
-                    {
-                        Console.WriteLine("Enter a key.");
-                        key = Console.ReadLine();
-                        if (key.All(char.IsDigit))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid key.");
-                            Console.WriteLine("Enter an integer.");
-                        }
-                    }
-                    try
-                    {
-                        string encryptedMessage = Ciphers.TranspositionCipher.Encrypt(message, Convert.ToInt32(key));
-                        Console.WriteLine($"|{encryptedMessage}|");
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-
-                case "2":
-                    Console.WriteLine("Enter the cipher text.");
-                    message = Console.ReadLine();
-
-                    while (true)
-                    {
-                        Console.WriteLine("Enter the key.");
-                        key = Console.ReadLine();
-                        if (key.All(char.IsDigit))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid key.");
-                            Console.WriteLine("Enter an integer.");
-                        }
-                    }
-                    try
-                    {
-                        string decryptedMessage = Ciphers.TranspositionCipher.Decrypt(message, Convert.ToInt32(key));
-                        Console.WriteLine($"| {decryptedMessage} |");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Menu for the caesar cipher option
-        /// </summary>
-        internal void CCMenu()
-        {
-            string message;
-            string key;
-
-            Console.WriteLine("1) Encrypt.");
-            Console.WriteLine("2) Decrypt.");
-            Console.WriteLine("3) Brute Force.");
-            string userSelection = Console.ReadLine().Trim();
-
-            switch (userSelection)
-            {
-
-                case "1":
-                    Console.WriteLine("Enter message.\n");
-                    message = Console.ReadLine();
-
-                    while (true)
-                    {
-                        Console.WriteLine("Enter a key.");
-                        key = Console.ReadLine();
-                        if (key.All(char.IsDigit))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter an integer.");
-                        }
-                    }
-                    try
-                    {
-                        string encryptedMessage = Ciphers.CaesarsCipher.Encrypt(message, Convert.ToInt32(key));
-                        Console.WriteLine($"|{encryptedMessage}|");
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-
-                case "2":
-                    Console.WriteLine("Enter message.\n");
-                    message = Console.ReadLine();
-
-                    while (true)
-                    {
-                        Console.WriteLine("Enter a key.");
-                        key = Console.ReadLine();
-                        if (key.All(char.IsDigit))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter an integer.");
-                        }
-                    }
-                    try
-                    {
-                        string encryptedMessage = Ciphers.CaesarsCipher.Decrypt(message, Convert.ToInt32(key));
-                        Console.WriteLine($"|{encryptedMessage}|");
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-
-                case "3":
-                    Console.WriteLine("Enter message.\n");
-                    message = Console.ReadLine();
-                    List<string> decryptedMessages = Ciphers.CaesarsCipher.BruteForce(message);
-
-                    foreach (string decryptedText in decryptedMessages)
-                    {
-                        Console.WriteLine($"|{decryptedText}|");
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Invalid input.");
-                    break;
-            }
-        }
-    }
-
     class Program
     {
 
@@ -288,15 +16,14 @@ namespace Ciphers
         static void Main(string[] args)
         {
             Menu menu = new Menu();
-
             try
             {
                 switch (args[0].ToLower())
                 {
-                    case "caesarcipher":
+                    case "cc":
                         try
                         {
-                            if (args[1].ToLower() == "bruteforce")
+                            if (args[1].ToLower() == "-b")
                             {
                                 menu.CaesarCipherArgs(args[2], args[1]);
                             }
@@ -304,12 +31,10 @@ namespace Ciphers
                         }
                         catch
                         {
-                            Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
-                            Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
-                            Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
+                            Console.WriteLine("Valid input: caesarcipher [mode (encrypt,decrypt,bruteforce): -e, -d, -b] [key: int] [message]");
                         }
                         return;
-                    case "transpositioncipher":
+                    case "tc":
                         try
                         {
                             menu.TranspositionArgs(args[3], args[1], Convert.ToInt32(args[2]));
@@ -320,10 +45,7 @@ namespace Ciphers
                         }
                         return;
                     default:
-                        Console.WriteLine("Valid input: caesarcipher [encrypt] [key] [message]");
-                        Console.WriteLine("Valid input: caesarcipher [decrypt] [key] [message]");
-                        Console.WriteLine("Valid input: caesarcipher [bruteforce] [message]");
-                        Console.WriteLine("");
+                        Console.WriteLine("Valid input: caesarcipher [mode (encrypt,decrypt,bruteforce): -e, -d, -b] [key: int] [message]\n");
                         Console.WriteLine("Valid input: transpositioncipher [encrypt] [key] [message]");
                         return;
                 }
